@@ -1,0 +1,27 @@
+version: "3.8" (newer docker versions use 3.something, saw 3.8 the most)
+
+networks:
+    [net_name]:
+    driver: bridge
+
+services:
+  [Service_Name]:
+    image: [image_from_dockerhub_or_whereever]
+    environment:
+      - [environment_specs]
+    ports:
+      - "outer_host:inner_container"
+    networks:
+      - [net_name]
+
+  [other_service]:
+    image: [image_from_dockerhub_or_whereever]
+    depends_on:
+      - [box_that_should_start_first]
+    volumes:
+      - [./container/path]:[host/path]
+      - [container/path]:[host/path:ro (ro is read only)]
+    ports:
+      - "outer_host:inner_container"
+    networks:
+      - [net_name]
